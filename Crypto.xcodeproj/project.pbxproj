@@ -7,19 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F47002C281D81E4009085BC /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F47002B281D81E4009085BC /* CryptoModel.swift */; };
+		0F47002F281D83C6009085BC /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F47002E281D83C6009085BC /* AppViewModel.swift */; };
 		0F48A20C281570CB004DD640 /* CryptoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F48A20B281570CB004DD640 /* CryptoApp.swift */; };
 		0F48A20E281570CB004DD640 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F48A20D281570CB004DD640 /* ContentView.swift */; };
 		0F48A210281570CB004DD640 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F48A20F281570CB004DD640 /* Assets.xcassets */; };
 		0F48A213281570CB004DD640 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F48A212281570CB004DD640 /* Preview Assets.xcassets */; };
+		0F9EB430281C4EC800A09F69 /* LineGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9EB42F281C4EC800A09F69 /* LineGraph.swift */; };
 		0FA683E428168D5C0043DBAB /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA683E328168D5C0043DBAB /* Home.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F47002B281D81E4009085BC /* CryptoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModel.swift; sourceTree = "<group>"; };
+		0F47002E281D83C6009085BC /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		0F48A208281570CB004DD640 /* Crypto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crypto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F48A20B281570CB004DD640 /* CryptoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoApp.swift; sourceTree = "<group>"; };
 		0F48A20D281570CB004DD640 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0F48A20F281570CB004DD640 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F48A212281570CB004DD640 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0F9EB42F281C4EC800A09F69 /* LineGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraph.swift; sourceTree = "<group>"; };
 		0FA683E328168D5C0043DBAB /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -34,6 +40,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F47002D281D83AF009085BC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0F47002E281D83C6009085BC /* AppViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		0F48A1FF281570CB004DD640 = {
 			isa = PBXGroup;
 			children = (
@@ -53,6 +67,7 @@
 		0F48A20A281570CB004DD640 /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
+				0F47002D281D83AF009085BC /* ViewModel */,
 				0FA683E228168D370043DBAB /* Model */,
 				0FA683E128168D230043DBAB /* View */,
 				0F48A20B281570CB004DD640 /* CryptoApp.swift */,
@@ -75,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				0FA683E328168D5C0043DBAB /* Home.swift */,
+				0F9EB42F281C4EC800A09F69 /* LineGraph.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -82,6 +98,7 @@
 		0FA683E228168D370043DBAB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0F47002B281D81E4009085BC /* CryptoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -156,9 +173,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F9EB430281C4EC800A09F69 /* LineGraph.swift in Sources */,
 				0F48A20E281570CB004DD640 /* ContentView.swift in Sources */,
+				0F47002F281D83C6009085BC /* AppViewModel.swift in Sources */,
 				0FA683E428168D5C0043DBAB /* Home.swift in Sources */,
 				0F48A20C281570CB004DD640 /* CryptoApp.swift in Sources */,
+				0F47002C281D81E4009085BC /* CryptoModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

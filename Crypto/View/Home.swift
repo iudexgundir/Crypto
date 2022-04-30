@@ -11,32 +11,37 @@ struct Home: View {
     @State var currentCoin: String = "BTC"
     @Namespace var animation
     @State var currentPrice: String = "0"
-    
+    @StateObject var appModel: AppViewModel = AppViewModel()
     var body: some View {
         VStack {
-            // MARK: UI
-            HStack(spacing: 15) {
-                Circle()
-                    .fill(.red)
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50)
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Bitcoin")
-                        .font(.callout)
-                        .fontWeight(.bold)
-                    Text("BTC")
-                        .font(.caption)
-                        .foregroundColor(.gray)
+            if let coins = appModel.coins, let coin = appModel.currentCoin {
+                // MARK: UI
+                HStack(spacing: 15) {
+                    Circle()
+                        .fill(.red)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Bitcoin")
+                            .font(.callout)
+                            .fontWeight(.bold)
+                        Text("BTC")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                   // .frame(alignment: .leading)
+                    
                 }
-               // .frame(alignment: .leading)
-                
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        
-        GraphView()
-        CustomControl()
-        Controls()
+                .frame(maxWidth: .infinity, alignment: .leading)
             
+            GraphView(coin: coin)
+            CustomControl()
+            Controls()
+            }
+            else {
+                ProgressView()
+                    .tint(Color.red)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -102,9 +107,9 @@ struct Home: View {
 
     // MARK: LineGraph
     @ViewBuilder
-    func GraphView() -> some View {
+func GraphView(coin: CryptoModel) -> some View {
         GeometryReader {_ in
-            
+            LineGraph(data: coin.last_7days_price.price)
         }
 }
 
