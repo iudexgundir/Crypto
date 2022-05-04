@@ -22,25 +22,29 @@ struct LineGraph: View {
     
     @State var translation: CGFloat = 0
     
+    @GestureState var isDrag: Bool = false
     
     var body: some View {
-        GeometryReader {
-            proxy in
-            
+        
+        GeometryReader { proxy in
             
             let height = proxy.size.height
             let width = (proxy.size.width) / CGFloat(data.count - 1)
             
-            let maxPoint = (data.max() ?? 0) + 100
+            let maxPoint = (data.max() ?? 0)
+            let minPoint = data.min() ?? 0
             
             let points = data.enumerated().compactMap {
                 item -> CGPoint in
                     
             // getting progress and multiplying with height
-            let progress = item.element / maxPoint
+            let progress = (item.element - minPoint) / (maxPoint - minPoint)
+                
+                
+            // Высота графика
+            let pathHeight = progress * (height)
                     
-            let pathHeight = progress * height
-                    
+                
             // width
             let pathWidth = width * CGFloat(item.offset)
                     
@@ -59,11 +63,15 @@ struct LineGraph: View {
                 .strokedPath(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
                 .fill(
                 // Gradient
-                    LinearGradient(colors: [.red, .black], startPoint: .leading, endPoint: .trailing)
+                    LinearGradient(colors: [.red, .red], startPoint: .leading, endPoint: .trailing)
                 )
                 
                 // Path Background Color
-              //  FillBG()
+                // Градиент под графиком
+               LinearGradient(colors: [Color.red.opacity(0.1),
+                                        Color.orange.opacity(0.1),
+                                       Color.black.opacity(0.3)], startPoint: .top, endPoint: .bottom)
+               
                 // Clipping the shape
                 .clipShape(
                     Path { path in
@@ -77,7 +85,7 @@ struct LineGraph: View {
                         path.addLine(to: CGPoint(x: 0, y: height))
                     }
                 )
-                .padding()
+                
             }
             .overlay(
             
@@ -128,6 +136,7 @@ struct LineGraph: View {
                 
                 withAnimation { showPlot = true }
                 
+                // положение бегунка на графике
                 let translation = value.location.x
                 
                 // Getting index...
@@ -153,19 +162,27 @@ struct LineGraph: View {
                 
                 Text("$ \(Int(max))")
                     .font(.caption.bold())
+                    .offset(y: -5)
                 
                 Spacer()
                 
                 Text("$ 0")
                     .font(.caption.bold())
-                
+                    .offset(y: 5)
             }
             
         )
         .padding(.horizontal, 10)
     }
+    
+   /*
+    @ViewBuilder
+    func fillBG() -> some View {
+      
+    }
 }
-
+*/
                         
                 
                         
+}

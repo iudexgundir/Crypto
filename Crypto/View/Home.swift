@@ -34,14 +34,15 @@ struct Home: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             
+            CurrentPrice(coin: coin)
             GraphView(coin: coin)
-            CustomControl()
+            CustomControl(coins: coins)
             Controls()
             }
-            else {
+             else {
                 ProgressView()
                     .tint(Color.red)
-            }
+            } 
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -49,20 +50,18 @@ struct Home: View {
     
     // MARK: SEGMENTED CONTROL
     @ViewBuilder
-    func CustomControl() -> some View {
-        // Data
-        let coins = ["BTC", "ETH", "SOL", "DOGE", "ADA", "NEAR", "TRX"]
+    func CustomControl(coins: [CryptoModel]) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack{
-                ForEach(coins, id: \.self) {
+                ForEach(coins) {
                     coin in
-                    Text(coin)
-                        .foregroundColor(currentCoin == coin ? .white : .gray)
+                    Text(coin.symbol.uppercased())
+                        .foregroundColor(currentCoin == coin.symbol.uppercased() ? .white : .gray)
                         .padding(.vertical, 6)
                         .padding(.horizontal, 10)
                         .contentShape(Rectangle())
                         .background {
-                            if currentCoin == coin {
+                            if currentCoin == coin.symbol.uppercased() {
                                 Rectangle()
                                     .fill(Color.red)
                                     .matchedGeometryEffect(id: "SEGMENTEDTAB", in: animation)
@@ -70,7 +69,8 @@ struct Home: View {
                             }
                         }
                         .onTapGesture {
-                            withAnimation { currentCoin = coin }
+                            appModel.currentCoin = coin
+                            withAnimation { currentCoin = coin.symbol.uppercased() }
                         }
                 }
             }
@@ -113,11 +113,20 @@ func GraphView(coin: CryptoModel) -> some View {
         }
 }
 
+@ViewBuilder
+func CurrentPrice(coin: CryptoModel) -> some View {
+    Text("\(Int(coin.current_price)) $")
+        .fontWeight(.bold)
+        //.foregroundColor()
+        .frame(maxWidth: .infinity, alignment: .leading)
+    
+}
 
 
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
         Home()
+            .previewInterfaceOrientation(.portraitUpsideDown)
     }
 }
