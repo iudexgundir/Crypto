@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct Home: View {
     @State var currentCoin: String = "BTC"
@@ -17,8 +18,8 @@ struct Home: View {
             if let coins = appModel.coins, let coin = appModel.currentCoin {
                 // MARK: UI
                 HStack(spacing: 15) {
-                    Circle()
-                        .fill(.red)
+                    AnimatedImage(url: URL(string: coin.image))
+                        .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50, height: 50)
                     VStack(alignment: .leading, spacing: 5) {
