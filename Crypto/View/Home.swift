@@ -23,12 +23,13 @@ struct Home: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 50, height: 50)
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Bitcoin")
+                        Text("\(coin.name)")
                             .font(.callout)
                             .fontWeight(.bold)
-                        Text("BTC")
+                        Text("\(coin.symbol.uppercased())")
                             .font(.caption)
                             .foregroundColor(.gray)
+                            
                     }
                    // .frame(alignment: .leading)
                     
@@ -116,7 +117,7 @@ func GraphView(coin: CryptoModel) -> some View {
 
 @ViewBuilder
 func CurrentPrice(coin: CryptoModel) -> some View {
-    Text("\(Int(coin.current_price)) $")
+    Text("\(Float(coin.current_price)) $")
         .fontWeight(.bold)
         //.foregroundColor()
         .frame(maxWidth: .infinity, alignment: .leading)
