@@ -35,7 +35,13 @@ struct Home: View {
                     
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(coin.current_price.convertToCurrency())
+                        .font(.largeTitle.bold())
+                    
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             CurrentPrice(coin: coin)
             GraphView(coin: coin)
             CustomControl(coins: coins)
@@ -130,5 +136,15 @@ struct Home_Previews: PreviewProvider {
     static var previews: some View {
         Home()
             .previewInterfaceOrientation(.portraitUpsideDown)
+    }
+}
+
+// MARK: Converting Double to Currency
+extension Double {
+    func convertToCurrency() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        
+        return formatter.string(from: .init(value: self)) ?? ""
     }
 }
