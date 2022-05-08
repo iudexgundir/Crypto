@@ -40,9 +40,15 @@ struct Home: View {
                     Text(coin.current_price.convertToCurrency())
                         .font(.largeTitle.bold())
                     
+                    Text("\(coin.price_change > 0 ? "+" : "")\(String(format: "%.2f", coin.price_change))")
+                        .font(.body.bold())
+                        .foregroundColor(coin.price_change < 0 ? .red : .green )
+                        .padding(.horizontal, 5)
+                       
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-            CurrentPrice(coin: coin)
+             
+            
             GraphView(coin: coin)
             CustomControl(coins: coins)
             Controls()
@@ -121,14 +127,6 @@ func GraphView(coin: CryptoModel) -> some View {
         }
 }
 
-@ViewBuilder
-func CurrentPrice(coin: CryptoModel) -> some View {
-    Text("\(Float(coin.current_price)) $")
-        .fontWeight(.bold)
-        //.foregroundColor()
-        .frame(maxWidth: .infinity, alignment: .leading)
-    
-}
 
 
 

@@ -24,6 +24,9 @@ struct LineGraph: View {
     
     @GestureState var isDrag: Bool = false
     
+    // animating graph
+    @State var graphProgress: CGFloat = 0
+    
     var body: some View {
         
         GeometryReader { proxy in
@@ -54,13 +57,7 @@ struct LineGraph: View {
             
             ZStack {
                 
-                Path { path in
-                    
-                    path.move(to: CGPoint(x: 0, y: 0))
-                    
-                    path.addLines(points)
-                }
-                .strokedPath(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
+               AnimatedGraphPath(progress: graphProgress, points: points)
                 .fill(
                 // Gradient
                     LinearGradient(colors: [.red, .red], startPoint: .leading, endPoint: .trailing)
@@ -85,7 +82,7 @@ struct LineGraph: View {
                         path.addLine(to: CGPoint(x: 0, y: height))
                     }
                 )
-                
+                .opacity(graphProgress)
             }
             .overlay(
             
@@ -154,35 +151,64 @@ struct LineGraph: View {
                 
             }))
         }
-        .overlay(
+        .background(
         
             VStack(alignment: .leading) {
                 
                 let max = data.max() ?? 0
+                let min = data.min() ?? 0
                 
-                Text("$ \(Int(max))")
+                Text(max.convertToCurrency())
                     .font(.caption.bold())
                     .offset(y: -5)
                 
                 Spacer()
                 
-                Text("$ 0")
-                    .font(.caption.bold())
-                    .offset(y: 5)
+                VStack(alignment: .leading, spacing: 5, content: {
+                    Text(min.convertToCurrency())
+                        .font(.caption.bold())
+                    
+                    Text("Last 7 Days")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                        
+                })
+                .offset(y: 25)
+
             }
-            
+                .frame(maxWidth: .infinity, alignment: .leading)
         )
-        //.padding(.horizontal, 10)
+        .padding(.horizontal, 10)
+        .onChange(of: isDrag) { newValue in
+            if !isDrag { showPlot = false }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation(.easeInOut(duration: 1.5)) {
+                    graphProgress = 1
+                }
+            }
+        }
     }
-    
-   /*
-    @ViewBuilder
-    func fillBG() -> some View {
-      
-    }
+                        
 }
-*/
-                        
-                
-                        
+
+// MARK: Animated Path
+struct AnimatedGraphPath: Shape {
+    var progress: CGFloat
+    var points: [CGPoint]
+    var animatableData: CGFloat {
+        get { return progress }
+        set { progress = newValue }
+    }
+    func path(in rect: CGRect) -> Path {
+        Path { path in
+            
+            path.move(to: CGPoint(x: 0, y: 0))
+            
+            path.addLines(points)
+        }
+        .trimmedPath(from: 0, to: progress)
+        .strokedPath(StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
+    }
 }
