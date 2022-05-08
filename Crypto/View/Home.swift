@@ -36,17 +36,18 @@ struct Home: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 5) {
                     Text(coin.current_price.convertToCurrency())
                         .font(.largeTitle.bold())
                     
-                    Text("\(coin.price_change > 0 ? "+" : "")\(String(format: "%.2f", coin.price_change))")
-                        .font(.body.bold())
+                    Text("\(coin.price_change > 0 ? "+" : "")\(String(format: "%.2f", coin.price_change))%")
+                        .font(.body)
                         .foregroundColor(coin.price_change < 0 ? .red : .green )
                         .padding(.horizontal, 5)
                        
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.bottom)
              
             
             GraphView(coin: coin)
@@ -112,7 +113,9 @@ struct Home: View {
                     .background {
                         
                        Capsule()
-                            .stroke(Color.gray)
+                            .stroke(LinearGradient(colors: [.purple, .red], startPoint: .leading, endPoint: .trailing)
+                             
+                        )
                     }
             }
     }

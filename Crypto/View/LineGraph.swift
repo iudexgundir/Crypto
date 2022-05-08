@@ -60,14 +60,14 @@ struct LineGraph: View {
                AnimatedGraphPath(progress: graphProgress, points: points)
                 .fill(
                 // Gradient
-                    LinearGradient(colors: [.red, .red], startPoint: .leading, endPoint: .trailing)
+                    LinearGradient(colors: [.purple, .red], startPoint: .leading, endPoint: .trailing)
                 )
                 
                 // Path Background Color
                 // Градиент под графиком
                LinearGradient(colors: [Color.red.opacity(0.1),
-                                        Color.orange.opacity(0.1),
-                                       Color.black.opacity(0.3)], startPoint: .top, endPoint: .bottom)
+                                        Color.purple.opacity(0.1),
+                                       Color.indigo.opacity(0.2)], startPoint: .top, endPoint: .bottom)
                
                 // Clipping the shape
                 .clipShape(
@@ -122,6 +122,7 @@ struct LineGraph: View {
                 //For Gesture Calculation
                     .frame(width: 80, height: 170)
                     .offset(y: 70)
+                    .offset(x: -40)
                     .offset(offset)
                     .opacity(showPlot ? 1 : 0),
                 
@@ -184,7 +185,16 @@ struct LineGraph: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                withAnimation(.easeInOut(duration: 1.5)) {
+                withAnimation(.easeInOut(duration: 1.2)) {
+                    graphProgress = 1
+                }
+            }
+        }
+        .onChange(of: data) { newValue in
+            // MARK Анимация графика каждый раз когда данные обновляются
+            graphProgress = 0
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation(.easeInOut(duration: 1.2)) {
                     graphProgress = 1
                 }
             }
